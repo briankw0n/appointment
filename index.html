@@ -4,29 +4,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Appointments</title>
   <style>
-    * { box-sizing: border-box; } /* important to prevent overflow */
+    * { box-sizing: border-box; }
     body { font-family: system-ui; padding: 16px; max-width: 420px; margin: auto; }
     input, button { width: 100%; padding: 12px; margin-top: 8px; font-size: 16px; }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 10px;
-      word-wrap: break-word;
-    }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-top: 10px; word-wrap: break-word; }
     .pending { background: #fff3cd; }
     .accepted { background: #d1e7dd; }
     .rejected { background: #f8d7da; }
-    .button-group {
-      display: flex;
-      flex-wrap: wrap; /* buttons will wrap if needed */
-      gap: 4px;        /* space between buttons */
-      margin-top: 8px;
-    }
-    .button-group button {
-      flex: 1;         /* buttons share space equally */
-      min-width: 100px; /* optional: small width limit */
-    }
+    .button-group { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .button-group button { flex: 1; min-width: 80px; }
   </style>
 </head>
 <body>
@@ -90,6 +76,13 @@
       rejectBtn.onclick = () => set(a.id, 'rejected')
       buttonGroup.appendChild(rejectBtn)
 
+      const deleteBtn = document.createElement('button')
+      deleteBtn.textContent = 'Delete'
+      deleteBtn.onclick = () => remove(a.id)
+      deleteBtn.style.background = '#f44336'; // red
+      deleteBtn.style.color = '#fff';
+      buttonGroup.appendChild(deleteBtn)
+
       card.appendChild(buttonGroup)
       listDiv.appendChild(card)
     })
@@ -97,6 +90,12 @@
 
   async function set(id, status) {
     await supabase.from("appointments").update({ status }).eq("id", id)
+    load()
+  }
+
+  async function remove(id) {
+    if (!confirm("Delete this appointment?")) return
+    await supabase.from("appointments").delete().eq("id", id)
     load()
   }
 
