@@ -3,98 +3,76 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Appointments</title>
-
-  <!-- Supabase JS library -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
   <style>
-    body {
-      font-family: system-ui;
-      padding: 16px;
-      max-width: 420px;
-      margin: auto;
-    }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      font-size: 16px;
-    }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 10px;
-    }
+    body { font-family: system-ui; padding: 16px; max-width: 420px; margin: auto; }
+    input, button { width: 100%; padding: 12px; margin-top: 8px; font-size: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin-top: 10px; }
     .pending { background: #fff3cd; }
     .accepted { background: #d1e7dd; }
     .rejected { background: #f8d7da; }
     button { margin-right: 4px; }
   </style>
 </head>
-
 <body>
 
 <h2>Request Appointment</h2>
 
 <input type="date" id="date">
 <input type="time" id="time">
-<button onclick="add()">Request</button>
+<button onclick="window.add()">Request</button>
 
 <h2>Appointments</h2>
 <div id="list"></div>
 
 <script>
-  // 🔴 Replace these with your Supabase Project URL and anon key
   const supabaseUrl = "https://geovhaihpvrxojxltksa.supabase.co";
   const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg";
 
   const supabase = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
 
-  // Add a new appointment
-  async function add() {
-    if (!date.value || !time.value) return alert("Pick date & time");
+  // Attach functions to window so onclick sees them
+  window.add = async function() {
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    if (!dateInput.value || !timeInput.value) return alert("Pick date & time");
+
     await supabase.from("appointments").insert({
-      date: date.value,
-      time: time.value,
+      date: dateInput.value,
+      time: timeInput.value,
       status: "pending"
     });
-    load();
+    window.load();
   }
 
-  // Load all appointments
-  async function load() {
+  window.load = async function() {
     const { data, error } = await supabase
       .from("appointments")
       .select("id, date, time, status")
       .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error(error);
-      return;
-    }
+    if (error) { console.error(error); return; }
 
-    list.innerHTML = "";
+    const listDiv = document.getElementById('list');
+    listDiv.innerHTML = "";
     data.forEach(a => {
-      list.innerHTML += `
+      listDiv.innerHTML += `
         <div class="card ${a.status}">
           <b>${a.date} ${a.time}</b><br>
           Status: ${a.status}<br>
-          <button onclick="set('${a.id}','accepted')">Accept</button>
-          <button onclick="set('${a.id}','rejected')">Reject</button>
+          <button onclick="window.set('${a.id}','accepted')">Accept</button>
+          <button onclick="window.set('${a.id}','rejected')">Reject</button>
         </div>
       `;
     });
   }
 
-  // Update status
-  async function set(id, status) {
+  window.set = async function(id, status) {
     await supabase.from("appointments").update({ status }).eq("id", id);
-    load();
+    window.load();
   }
 
-  // Load appointments on page load
-  load();
+  window.load();
 </script>
 
 </body>
