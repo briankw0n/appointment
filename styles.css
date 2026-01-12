@@ -41,18 +41,18 @@ input, button {
   min-width: 80px;
 }
 
-/* Plain black X in the very top-right corner of card */
+/* Plain black X in the top-right corner inside the card */
 .delete-x {
   position: absolute;
-  top: -8px;      /* above the card border */
-  right: -8px;    /* outside the card border */
+  top: 4px;         /* slightly below top edge */
+  right: 4px;       /* slightly inside right edge */
   cursor: pointer;
   font-weight: bold;
-  font-size: 20px;
-  color: #000;    /* black X */
+  font-size: 18px;
+  color: #000;      /* black X */
   border: none;
-  background: none;
+  background: none; /* no circle */
   padding: 0;
   line-height: 1;
-  z-index: 10;    /* ensures it sits above card content */
+  z-index: 10;
 }
