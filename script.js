@@ -1,6 +1,5 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// 🔴 Replace with your Supabase Project URL and anon key
 const supabase = createClient(
   "https://geovhaihpvrxojxltksa.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
@@ -22,7 +21,7 @@ async function add() {
   load()
 }
 
-// Load all appointments
+// Load appointments
 async function load() {
   const { data, error } = await supabase
     .from("appointments")
@@ -55,7 +54,7 @@ async function load() {
 
     card.appendChild(buttonGroup)
 
-    // Delete X in top-right
+    // Delete X top-right inside card
     const deleteX = document.createElement('button')
     deleteX.className = 'delete-x'
     deleteX.textContent = '×'
@@ -84,5 +83,5 @@ async function remove(id) {
 // Event listener for request button
 document.getElementById('requestBtn').addEventListener('click', add)
 
-// Load appointments on page load
+// Load on page load
 load()
