@@ -26,10 +26,15 @@
 <div id="list"></div>
 
 <script>
-  const supabaseUrl = "https://geovhaihpvrxojxltksa.supabase.co";
-  const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg";
+  // Only declare supabase once
+  if (!window.supabaseClient) {
+    window.supabaseClient = supabaseJs.createClient(
+      "https://geovhaihpvrxojxltksa.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
+    );
+  }
 
-  const supabase = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
+  const supabase = window.supabaseClient;
 
   // Add a new appointment
   async function add() {
@@ -57,6 +62,7 @@
 
     const listDiv = document.getElementById('list');
     listDiv.innerHTML = "";
+
     data.forEach(a => {
       listDiv.innerHTML += `
         <div class="card ${a.status}">
@@ -68,7 +74,7 @@
       `;
     });
 
-    // Attach click handlers dynamically
+    // Attach dynamic click handlers
     document.querySelectorAll('.acceptBtn').forEach(btn => {
       btn.addEventListener('click', () => set(btn.dataset.id, 'accepted'));
     });
