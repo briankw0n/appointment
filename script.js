@@ -1,6 +1,5 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-// 🔴 Replace with your Supabase Project URL and anon key
 const supabase = createClient(
   "https://geovhaihpvrxojxltksa.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
@@ -12,16 +11,17 @@ async function add() {
   const timeInput = document.getElementById('time')
   if (!dateInput.value || !timeInput.value) return alert("Pick date & time")
 
-  await supabase.from("appointments").insert({
+  const { error } = await supabase.from("appointments").insert({
     date: dateInput.value,
     time: timeInput.value,
     status: "pending"
   })
 
+  if (error) return console.error(error)
   load()
 }
 
-// Load all appointments
+// Load appointments
 async function load() {
   const { data, error } = await supabase
     .from("appointments")
@@ -38,6 +38,7 @@ async function load() {
     card.className = `card ${a.status}`
     card.innerHTML = `<b>${a.date} ${a.time}</b><br>Status: ${a.status}`
 
+    // Accept/Reject buttons
     const buttonGroup = document.createElement('div')
     buttonGroup.className = 'button-group'
 
@@ -51,32 +52,34 @@ async function load() {
     rejectBtn.onclick = () => setStatus(a.id, 'rejected')
     buttonGroup.appendChild(rejectBtn)
 
-    const deleteBtn = document.createElement('button')
-    deleteBtn.textContent = 'Delete'
-    deleteBtn.className = 'delete'
-    deleteBtn.onclick = () => remove(a.id)
-    buttonGroup.appendChild(deleteBtn)
-
     card.appendChild(buttonGroup)
+
+    // Delete X
+    const deleteX = document.createElement('button')
+    deleteX.className = 'delete-x'
+    deleteX.textContent = '×'
+    deleteX.onclick = () => remove(a.id)
+    card.appendChild(deleteX)
+
     listDiv.appendChild(card)
   })
 }
 
 // Update status
 async function setStatus(id, status) {
-  await supabase.from("appointments").update({ status }).eq("id", id)
+  const { error } = await supabase.from("appointments").update({ status }).eq("id", id)
+  if (error) return console.error(error)
   load()
 }
 
 // Delete appointment
 async function remove(id) {
   if (!confirm("Delete this appointment?")) return
-  await supabase.from("appointments").delete().eq("id", id)
+  const { error } = await supabase.from("appointments").delete().eq("id", id)
+  if (error) return console.error(error)
   load()
 }
 
-// Attach event listener
+// Event listener
 document.getElementById('requestBtn').addEventListener('click', add)
-
-// Load appointments initially
 load()
