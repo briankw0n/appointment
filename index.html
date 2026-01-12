@@ -3,7 +3,6 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Appointments</title>
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     body { font-family: system-ui; padding: 16px; max-width: 420px; margin: auto; }
     input, button { width: 100%; padding: 12px; margin-top: 8px; font-size: 16px; }
@@ -17,7 +16,6 @@
 <body>
 
 <h2>Request Appointment</h2>
-
 <input type="date" id="date">
 <input type="time" id="time">
 <button id="requestBtn">Request</button>
@@ -25,71 +23,78 @@
 <h2>Appointments</h2>
 <div id="list"></div>
 
-<script>
-  // ✅ Use a unique global name to avoid conflicts
-  if (!window.supabaseAppointments) {
-    window.supabaseAppointments = supabaseJs.createClient(
-      "https://geovhaihpvrxojxltksa.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
-    );
-  }
+<script type="module">
+  // Import Supabase from CDN inside module
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
-  const supabase = window.supabaseAppointments;
+  // 🔴 Replace with your Supabase Project URL and anon key
+  const supabase = createClient(
+    "https://geovhaihpvrxojxltksa.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
+  );
 
+  // Add appointment
   async function add() {
-    const dateInput = document.getElementById('date');
-    const timeInput = document.getElementById('time');
-    if (!dateInput.value || !timeInput.value) return alert("Pick date & time");
+    const dateInput = document.getElementById('date')
+    const timeInput = document.getElementById('time')
+    if (!dateInput.value || !timeInput.value) return alert("Pick date & time")
 
     await supabase.from("appointments").insert({
       date: dateInput.value,
       time: timeInput.value,
       status: "pending"
-    });
+    })
 
-    load();
+    load()
   }
 
+  // Load appointments
   async function load() {
     const { data, error } = await supabase
       .from("appointments")
       .select("id, date, time, status")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
 
-    if (error) { console.error(error); return; }
+    if (error) { console.error(error); return }
 
-    const listDiv = document.getElementById('list');
-    listDiv.innerHTML = "";
+    const listDiv = document.getElementById('list')
+    listDiv.innerHTML = ""
 
     data.forEach(a => {
-      listDiv.innerHTML += `
-        <div class="card ${a.status}">
-          <b>${a.date} ${a.time}</b><br>
-          Status: ${a.status}<br>
-          <button class="acceptBtn" data-id="${a.id}">Accept</button>
-          <button class="rejectBtn" data-id="${a.id}">Reject</button>
-        </div>
-      `;
-    });
+      const card = document.createElement('div')
+      card.className = `card ${a.status}`
+      card.innerHTML = `
+        <b>${a.date} ${a.time}</b><br>
+        Status: ${a.status}<br>
+      `
 
-    // Attach dynamic click handlers
-    document.querySelectorAll('.acceptBtn').forEach(btn => {
-      btn.addEventListener('click', () => set(btn.dataset.id, 'accepted'));
-    });
-    document.querySelectorAll('.rejectBtn').forEach(btn => {
-      btn.addEventListener('click', () => set(btn.dataset.id, 'rejected'));
-    });
+      // Accept button
+      const acceptBtn = document.createElement('button')
+      acceptBtn.textContent = 'Accept'
+      acceptBtn.onclick = () => set(a.id, 'accepted')
+      card.appendChild(acceptBtn)
+
+      // Reject button
+      const rejectBtn = document.createElement('button')
+      rejectBtn.textContent = 'Reject'
+      rejectBtn.onclick = () => set(a.id, 'rejected')
+      card.appendChild(rejectBtn)
+
+      listDiv.appendChild(card)
+    })
   }
 
+  // Update status
   async function set(id, status) {
-    await supabase.from("appointments").update({ status }).eq("id", id);
-    load();
+    await supabase.from("appointments").update({ status }).eq("id", id)
+    load()
   }
 
-  document.getElementById('requestBtn').addEventListener('click', add);
+  // Attach listener for request button
+  document.getElementById('requestBtn').addEventListener('click', add)
 
-  // Initial load
-  load();
+  // Load appointments on page load
+  load()
 </script>
 
 </body>
