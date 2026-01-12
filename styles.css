@@ -15,6 +15,7 @@ input, button {
 }
 
 .card {
+  position: relative; /* for x button */
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 12px;
@@ -38,7 +39,14 @@ input, button {
   min-width: 80px;
 }
 
-.button-group .delete {
-  background: #f44336;
-  color: #fff;
+.delete-x {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  color: #f44336;
+  border: none;
+  background: none;
 }
