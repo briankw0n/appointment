@@ -26,17 +26,16 @@
 <div id="list"></div>
 
 <script>
-  // Only declare supabase once
-  if (!window.supabaseClient) {
-    window.supabaseClient = supabaseJs.createClient(
+  // ✅ Use a unique global name to avoid conflicts
+  if (!window.supabaseAppointments) {
+    window.supabaseAppointments = supabaseJs.createClient(
       "https://geovhaihpvrxojxltksa.supabase.co",
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
     );
   }
 
-  const supabase = window.supabaseClient;
+  const supabase = window.supabaseAppointments;
 
-  // Add a new appointment
   async function add() {
     const dateInput = document.getElementById('date');
     const timeInput = document.getElementById('time');
@@ -51,7 +50,6 @@
     load();
   }
 
-  // Load all appointments
   async function load() {
     const { data, error } = await supabase
       .from("appointments")
@@ -83,16 +81,14 @@
     });
   }
 
-  // Update status
   async function set(id, status) {
     await supabase.from("appointments").update({ status }).eq("id", id);
     load();
   }
 
-  // Attach request button listener
   document.getElementById('requestBtn').addEventListener('click', add);
 
-  // Load appointments on page load
+  // Initial load
   load();
 </script>
 
