@@ -1,0 +1,44 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui;
+  padding: 16px;
+  max-width: 420px;
+  margin: auto;
+}
+
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+  word-wrap: break-word;
+}
+
+.pending { background: #fff3cd; }
+.accepted { background: #d1e7dd; }
+.rejected { background: #f8d7da; }
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.button-group button {
+  flex: 1;
+  min-width: 80px;
+}
+
+.button-group .delete {
+  background: #f44336;
+  color: #fff;
+}
