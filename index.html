@@ -20,7 +20,7 @@
 
 <input type="date" id="date">
 <input type="time" id="time">
-<button onclick="window.add()">Request</button>
+<button id="requestBtn">Request</button>
 
 <h2>Appointments</h2>
 <div id="list"></div>
@@ -31,8 +31,8 @@
 
   const supabase = supabaseJs.createClient(supabaseUrl, supabaseAnonKey);
 
-  // Attach functions to window so onclick sees them
-  window.add = async function() {
+  // Add a new appointment
+  async function add() {
     const dateInput = document.getElementById('date');
     const timeInput = document.getElementById('time');
     if (!dateInput.value || !timeInput.value) return alert("Pick date & time");
@@ -42,10 +42,12 @@
       time: timeInput.value,
       status: "pending"
     });
-    window.load();
+
+    load();
   }
 
-  window.load = async function() {
+  // Load all appointments
+  async function load() {
     const { data, error } = await supabase
       .from("appointments")
       .select("id, date, time, status")
@@ -60,19 +62,32 @@
         <div class="card ${a.status}">
           <b>${a.date} ${a.time}</b><br>
           Status: ${a.status}<br>
-          <button onclick="window.set('${a.id}','accepted')">Accept</button>
-          <button onclick="window.set('${a.id}','rejected')">Reject</button>
+          <button class="acceptBtn" data-id="${a.id}">Accept</button>
+          <button class="rejectBtn" data-id="${a.id}">Reject</button>
         </div>
       `;
     });
+
+    // Attach click handlers dynamically
+    document.querySelectorAll('.acceptBtn').forEach(btn => {
+      btn.addEventListener('click', () => set(btn.dataset.id, 'accepted'));
+    });
+    document.querySelectorAll('.rejectBtn').forEach(btn => {
+      btn.addEventListener('click', () => set(btn.dataset.id, 'rejected'));
+    });
   }
 
-  window.set = async function(id, status) {
+  // Update status
+  async function set(id, status) {
     await supabase.from("appointments").update({ status }).eq("id", id);
-    window.load();
+    load();
   }
 
-  window.load();
+  // Attach request button listener
+  document.getElementById('requestBtn').addEventListener('click', add);
+
+  // Load appointments on page load
+  load();
 </script>
 
 </body>
