@@ -14,7 +14,7 @@ input, button {
   font-size: 16px;
 }
 
-/* Appointment card styling */
+/* Appointment card */
 .card {
   position: relative; /* needed for absolute X */
   border: 1px solid #ddd;
@@ -41,17 +41,18 @@ input, button {
   min-width: 80px;
 }
 
-/* Plain black X in the top-right corner */
+/* Plain black X in the very top-right corner of card */
 .delete-x {
   position: absolute;
-  top: 4px;
-  right: 8px;
+  top: -8px;      /* above the card border */
+  right: -8px;    /* outside the card border */
   cursor: pointer;
   font-weight: bold;
-  font-size: 18px;
-  color: #000;       /* black X */
+  font-size: 20px;
+  color: #000;    /* black X */
   border: none;
-  background: none;  /* no circle */
+  background: none;
   padding: 0;
   line-height: 1;
+  z-index: 10;    /* ensures it sits above card content */
 }
