@@ -1,23 +1,23 @@
 * { box-sizing: border-box; }
 
 body {
+  width: 0;
   font-family: system-ui;
   padding: 16px;
   max-width: 420px;
   margin: auto;
 }
 
-/* Smaller inputs and request button */
-#date, #time, #requestBtn {
-  padding: 8px;
-  font-size: 14px;
+input, button {
   width: 100%;
-  margin-top: 6px;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 16px;
 }
 
 /* Appointment card */
 .card {
-  position: relative;
+  position: relative; /* needed for absolute X */
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
