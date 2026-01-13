@@ -7,22 +7,23 @@ body {
   margin: auto;
 }
 
-input, button {
+/* Smaller inputs and request button */
+#date, #time, #requestBtn {
+  padding: 8px;
+  font-size: 14px;
   width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  font-size: 16px;
+  margin-top: 6px;
 }
 
 /* Appointment card */
 .card {
-  position: relative; /* needed for absolute X */
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   margin-top: 20px;
   word-wrap: break-word;
-  width: 50%;
+  width: 100%;
   box-sizing: border-box;
 }
 
