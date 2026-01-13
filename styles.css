@@ -4,14 +4,17 @@ body {
   font-family: system-ui;
   padding: 16px;
   max-width: 420px;
-  margin: 0;
+  margin: auto;
+  overflow-x: hidden;  /* prevent horizontal scroll */
 }
 
-input, button {
+/* Smaller inputs and request button */
+#date, #time, #requestBtn {
+  padding: 8px;
+  font-size: 14px;
   width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  font-size: 16px;
+  margin-top: 6px;
+  box-sizing: border-box;
 }
 
 /* Appointment card */
@@ -22,8 +25,9 @@ input, button {
   padding: 16px;
   margin-top: 20px;
   word-wrap: break-word;
-  width: 100%;
+  width: 100%;      /* always fits parent container */
   box-sizing: border-box;
+  overflow: hidden;  /* prevent inner overflow */
 }
 
 .pending { background: #fff3cd; }
@@ -33,14 +37,15 @@ input, button {
 /* Accept/Reject buttons container */
 .button-group {
   display: flex;
-  flex-wrap: wrap;   /* wrap to next line on small screens */
+  flex-wrap: wrap;   /* wrap buttons if not enough space */
   gap: 4px;
   margin-top: 12px;
 }
 
 .button-group button {
-  flex: 1 1 45%;     /* take ~half width, shrink if needed */
+  flex: 1 1 45%;     /* each button ~half width, shrink if needed */
   min-width: 0;      /* prevent overflow */
+  box-sizing: border-box;
 }
 
 /* Plain black X in the top-right corner inside the card */
