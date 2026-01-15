@@ -107,3 +107,7 @@ body {
 .delete-x:active {
   opacity: 0.6;
 }
+
+#requestBtn {
+  width: 100%;
+}
