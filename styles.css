@@ -43,7 +43,7 @@ body {
   width: 94%;           /* full width of container */
   padding: 12px;
   font-size: 16px;       /* prevents iOS zoom */
-  color: white;
+  color: rgb(0, 0, 0);
   background-color: rgb(71, 71, 71);
   border: none;
   border-radius: 6px;
@@ -64,9 +64,9 @@ body {
 }
 
 /* Status colors */
-.pending { background: #dabc5b; color: #000; }
-.accepted { background: #00894b; color: #fff; }
-.rejected { background: #ff0015; color: #fff; }
+.pending { background: #dabc5b; }
+.accepted { background: #00894b; }
+.rejected { background: #ff2c3e; }
 
 /* Accept / Reject buttons */
 .button-group {
@@ -84,7 +84,7 @@ body {
   border-radius: 6px;
   border-color: rgb(71, 71, 71);
   cursor: pointer;
-  color: rgb(0, 0, 0);
+  color: white;
   background-color: rgb(71, 71, 71);
 }
 
@@ -115,4 +115,5 @@ body {
   width: 100%;
   font-weight: bold;
   cursor: pointer;
+  color: white;
 }
