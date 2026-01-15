@@ -26,7 +26,7 @@ body {
 /* Inputs & buttons */
 input,
 button {
-  width: 100%;
+  width: 90%;
   padding: 12px;
   margin-top: 8px;
   font-size: 16px; /* iOS zoom prevention */
@@ -49,9 +49,9 @@ button {
 }
 
 /* Status colors */
-.pending { background: #fff3cd; }
-.accepted { background: #d1e7dd; }
-.rejected { background: #f8d7da; }
+.pending { background: #dabc5b; }
+.accepted { background: #00894b; }
+.rejected { background: #9b000d; }
 
 /* Accept / Reject buttons */
 .button-group {
