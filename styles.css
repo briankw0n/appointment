@@ -1,69 +1,90 @@
-* { box-sizing: border-box; }
+/* Global reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
+/* Hard stop horizontal scrolling */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Page layout */
 body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
-  font-family: system-ui;
   padding: 16px;
+  font-family: system-ui;
   max-width: 420px;
-  margin: auto;
-  color: rgb(255, 255, 255);
+  margin-inline: auto;
+  color: #fff;
   background-color: rgb(47, 47, 47);
 }
 
-input, button {
+/* Inputs & buttons */
+input,
+button {
   width: 100%;
   padding: 12px;
   margin-top: 8px;
-  font-size: 16px;
+  font-size: 16px; /* iOS zoom prevention */
   color: white;
   background-color: rgb(71, 71, 71);
+  border: none;
+  border-radius: 6px;
 }
 
 /* Appointment card */
 .card {
-  position: relative; /* needed for absolute X */
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   margin-top: 20px;
-  word-wrap: break-word;
   width: 100%;
-  box-sizing: border-box;
-  color: black;
+  word-break: break-word;
+  color: #000;
 }
 
+/* Status colors */
 .pending { background: #fff3cd; }
 .accepted { background: #d1e7dd; }
 .rejected { background: #f8d7da; }
 
-/* Accept/Reject buttons container */
+/* Accept / Reject buttons */
 .button-group {
   display: flex;
-  flex-wrap: wrap;   /* wrap to next line on small screens */
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
   margin-top: 12px;
 }
 
 .button-group button {
-  flex: 1 1 45%;     /* take ~half width, shrink if needed */
-  min-width: 0;      /* prevent overflow */
+  flex: 1 1 48%;
+  min-width: 0;
 }
 
-/* Plain black X in the top-right corner inside the card */
+/* Delete X — top-right of card */
 .delete-x {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  top: 8px;
+  right: 8px;
+  width: 24px;       /* larger tap target */
+  height: 24px;
   font-size: 18px;
+  font-weight: bold;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
   color: #000;
-  border: none;
   background: none;
-  padding: 0;
-  line-height: 1;
+  border: none;
   z-index: 10;
+}
+
+/* Optional hover / tap feedback */
+.delete-x:active {
+  opacity: 0.6;
 }
