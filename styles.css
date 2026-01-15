@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  overflow-x: hidden;
   font-family: system-ui;
   padding: 16px;
   max-width: 420px;
