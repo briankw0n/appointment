@@ -15,6 +15,30 @@ function format12HourTime(timeStr) {
 }
 
 /* Add appointment */
+async function add() {
+  const dateInput = document.getElementById('date');
+  const timeInput = document.getElementById('time');
+
+  if (!dateInput.value || !timeInput.value) {
+    alert("Pick date & time");
+    return;
+  }
+
+  const { error } = await supabase.from("appointments").insert({
+    date: dateInput.value,
+    time: timeInput.value,
+    status: "pending"
+  });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  load();
+}
+
+/* Load appointments */
 async function load() {
   const { data, error } = await supabase
     .from("appointments")
