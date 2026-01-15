@@ -43,7 +43,7 @@ body {
   width: 94%;           /* full width of container */
   padding: 12px;
   font-size: 16px;       /* prevents iOS zoom */
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   background-color: rgb(71, 71, 71);
   border: none;
   border-radius: 6px;
