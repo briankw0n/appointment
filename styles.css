@@ -51,7 +51,7 @@ button {
 /* Status colors */
 .pending { background: #dabc5b; }
 .accepted { background: #00894b; }
-.rejected { background: #9b000d; }
+.rejected { background: #cb0011; }
 
 /* Accept / Reject buttons */
 .button-group {
@@ -69,8 +69,8 @@ button {
 /* Delete X — top-right of card */
 .delete-x {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: -8px;
+  right: 15px;
   width: 24px;       /* larger tap target */
   height: 24px;
   font-size: 18px;
