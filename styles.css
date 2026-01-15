@@ -29,6 +29,7 @@ input, button {
   word-wrap: break-word;
   width: 100%;
   box-sizing: border-box;
+  color: black;
 }
 
 .pending { background: #fff3cd; }
