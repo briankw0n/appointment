@@ -60,13 +60,13 @@ body {
   width: 100%;
   word-break: break-word;
   background-color: #fff;   /* default background */
-  color: #000;              /* default text color */
+  color: #ffffff;              /* default text color */
 }
 
 /* Status colors */
-.pending { background: #dabc5b; }
-.accepted { background: #00894b; }
-.rejected { background: #ff2c3e; }
+.pending { background: #dabc5b; color: #000000; }
+.accepted { background: #00894b; color: #000000; }
+.rejected { background: #fe2234; color: #000000; }
 
 /* Accept / Reject buttons */
 .button-group {
