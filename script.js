@@ -5,6 +5,15 @@ const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlb3ZoYWlocHZyeG9qeGx0a3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNTQ5MTMsImV4cCI6MjA4MzgzMDkxM30.ZpiLjOIdn6s3g-HnZiawDgoS98Qmb8XG0ulHCpGuxMg"
 );
 
+/* Helper: format HH:MM to 12-hour with AM/PM */
+function format12HourTime(timeStr) {
+  let [hour, minute] = timeStr.split(':').map(Number);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12;
+  if (hour === 0) hour = 12; // midnight/noon fix
+  return `${hour}:${minute.toString().padStart(2, '0')} ${ampm}`;
+}
+
 /* Add appointment */
 async function add() {
   const dateInput = document.getElementById('date');
@@ -45,12 +54,15 @@ async function load() {
   listDiv.innerHTML = "";
 
   data.forEach(a => {
-    const card = document.createElement('div');
-    card.className = `card ${a.status}`;
+    const statusClass = a.status.toLowerCase().trim(); // normalize
 
-    /* Content */
+    const card = document.createElement('div');
+    card.className = `card ${statusClass}`;
+
+    /* Content with 12-hour time */
     const content = document.createElement('div');
-    content.innerHTML = `<b>${a.date} ${a.time}</b><br>Status: ${a.status}`;
+    const formattedTime = format12HourTime(a.time);
+    content.innerHTML = `<b>${a.date} ${formattedTime}</b><br>Status: ${a.status}`;
     card.appendChild(content);
 
     /* Button group */
@@ -75,7 +87,7 @@ async function load() {
     deleteX.setAttribute('aria-label', 'Delete appointment');
 
     deleteX.addEventListener('click', (e) => {
-      e.stopPropagation(); // 🔒 critical: prevents card click side effects
+      e.stopPropagation(); // prevents card click side effects
       remove(a.id);
     });
 
