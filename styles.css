@@ -40,7 +40,7 @@ body {
 /* Inputs and button */
 .input-group input,
 .input-group button {
-  width: 93%;           /* full width of container */
+  width: 96%;           /* full width of container */
   padding: 12px;
   font-size: 16px;       /* prevents iOS zoom */
   color: white;
@@ -82,7 +82,7 @@ body {
   padding: 8px;
   font-size: 14px;
   border-radius: 6px;
-  border-color: none;
+  border-color: rgb(71, 71, 71);
   cursor: pointer;
   color: white;
   background-color: rgb(71, 71, 71);
