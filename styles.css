@@ -23,17 +23,32 @@ body {
   background-color: rgb(47, 47, 47);
 }
 
-/* Inputs & buttons */
-input,
-button {
-  width: 90%;
+/* Input group: make inputs and button same width */
+.input-group {
+  width: 100%;
+}
+
+/* Labels for inputs */
+.input-group label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Inputs and button */
+.input-group input,
+.input-group button {
+  width: 100%;           /* full width of container */
   padding: 12px;
-  margin-top: 8px;
-  font-size: 16px; /* iOS zoom prevention */
+  font-size: 16px;       /* prevents iOS zoom */
   color: white;
   background-color: rgb(71, 71, 71);
   border: none;
   border-radius: 6px;
+  box-sizing: border-box;
+  margin-top: 8px;       /* spacing between fields */
 }
 
 /* Appointment card */
@@ -50,8 +65,8 @@ button {
 
 /* Status colors */
 .pending { background: #dabc5b; }
-.accepted { background: #00894b; }
-.rejected { background: #ff0015; }
+.accepted { background: #00894b; color: #fff; }
+.rejected { background: #ff0015; color: #fff; }
 
 /* Accept / Reject buttons */
 .button-group {
@@ -64,14 +79,18 @@ button {
 .button-group button {
   flex: 1 1 48%;
   min-width: 0;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* Delete X — top-right of card */
 .delete-x {
   position: absolute;
-  top: -8px;
+  top: -8px;           /* slightly above the card */
   right: 15px;
-  width: 24px;       /* larger tap target */
+  width: 24px;
   height: 24px;
   font-size: 18px;
   font-weight: bold;
