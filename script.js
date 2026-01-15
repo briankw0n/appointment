@@ -15,40 +15,30 @@ function format12HourTime(timeStr) {
 }
 
 /* Add appointment */
-async function add() {
-  const dateInput = document.getElementById('date');
-  const timeInput = document.getElementById('time');
-
-  if (!dateInput.value || !timeInput.value) {
-    alert("Pick date & time");
-    return;
-  }
-
-  const { error } = await supabase.from("appointments").insert({
-    date: dateInput.value,
-    time: timeInput.value,
-    status: "pending"
-  });
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  load();
-}
-
-/* Load appointments */
 async function load() {
   const { data, error } = await supabase
     .from("appointments")
     .select("id, date, time, status")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false }); // initial fetch
 
   if (error) {
     console.error(error);
     return;
   }
+
+  // Custom sort: pending → accepted → rejected, then by time ascending
+  const statusPriority = { pending: 1, accepted: 2, rejected: 3 };
+
+  data.sort((a, b) => {
+    // Compare status priority
+    const statusDiff = statusPriority[a.status.toLowerCase()] - statusPriority[b.status.toLowerCase()];
+    if (statusDiff !== 0) return statusDiff;
+
+    // Same status → sort by date and time
+    const dateTimeA = new Date(`${a.date}T${a.time}`);
+    const dateTimeB = new Date(`${b.date}T${b.time}`);
+    return dateTimeA - dateTimeB;
+  });
 
   const listDiv = document.getElementById('list');
   listDiv.innerHTML = "";
@@ -80,14 +70,14 @@ async function load() {
     buttonGroup.append(acceptBtn, rejectBtn);
     card.appendChild(buttonGroup);
 
-    /* Delete X — ONLY delete trigger */
+    /* Delete X */
     const deleteX = document.createElement('button');
     deleteX.className = 'delete-x';
     deleteX.textContent = '×';
     deleteX.setAttribute('aria-label', 'Delete appointment');
 
     deleteX.addEventListener('click', (e) => {
-      e.stopPropagation(); // prevents card click side effects
+      e.stopPropagation();
       remove(a.id);
     });
 
