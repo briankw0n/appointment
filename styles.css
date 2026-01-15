@@ -1,10 +1,13 @@
 * { box-sizing: border-box; }
 
 body {
+  margin: 0;
   font-family: system-ui;
   padding: 16px;
   max-width: 420px;
   margin: auto;
+  color: rgb(255, 255, 255);
+  background-color: rgb(47, 47, 47);
 }
 
 input, button {
@@ -12,6 +15,8 @@ input, button {
   padding: 12px;
   margin-top: 8px;
   font-size: 16px;
+  color: white;
+  background-color: rgb(71, 71, 71);
 }
 
 /* Appointment card */
