@@ -59,11 +59,12 @@ body {
   margin-top: 20px;
   width: 100%;
   word-break: break-word;
-  color: #000;
+  background-color: #fff;   /* default background */
+  color: #000;              /* default text color */
 }
 
 /* Status colors */
-.pending { background: #dabc5b; }
+.pending { background: #dabc5b; color: #000; }
 .accepted { background: #00894b; color: #fff; }
 .rejected { background: #ff0015; color: #fff; }
 

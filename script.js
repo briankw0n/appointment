@@ -59,11 +59,11 @@ async function load() {
 
     const acceptBtn = document.createElement('button');
     acceptBtn.textContent = 'Accept';
-    acceptBtn.onclick = () => setStatus(a.id, 'Accepted');
+    acceptBtn.onclick = () => setStatus(a.id, 'accepted');
 
     const rejectBtn = document.createElement('button');
     rejectBtn.textContent = 'Reject';
-    rejectBtn.onclick = () => setStatus(a.id, 'Rejected');
+    rejectBtn.onclick = () => setStatus(a.id, 'rejected');
 
     buttonGroup.append(acceptBtn, rejectBtn);
     card.appendChild(buttonGroup);
